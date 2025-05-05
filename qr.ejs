@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>QR Code Scanner</title>
+  <script src="./WhatsApp Image 2025-05-04 at 22.17.19_5e760638.jpg" type="text/javascript"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    #reader {
+      width: 300px;
+      margin: auto;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 1.2em;
+      font-weight: bold;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>QR Code Scanner</h2>
+  <div id="reader"></div>
+  <div id="result">Scan a QR code...</div>
+
+  <script>
+    function onScanSuccess(decodedText, decodedResult) {
+      // Handle the scanned code as you like
+      document.getElementById('result').innerText = `Scanned: ${decodedText}`;
+    }
+
+    function onScanFailure(error) {
+      // Optional: handle scan failure
+      console.warn(`QR scan failed: ${error}`);
+    }
+
+    let html5QrCode = new Html5Qrcode("reader");
+    html5QrCode.start(
+      { facingMode: "environment" }, // Use rear camera if available
+      {
+        fps: 10,    // Scans per second
+        qrbox: 250  // Size of the scanning box
+      },
+      onScanSuccess,
+      onScanFailure
+    ).catch(err => {
+      document.getElementById('result').innerText = `Camera start error: ${err}`;
+    });
+  </script>
+
+</body>
+</html>
